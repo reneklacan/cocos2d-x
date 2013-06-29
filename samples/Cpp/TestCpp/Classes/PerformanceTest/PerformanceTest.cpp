@@ -57,9 +57,9 @@ void PerformanceMainLayer::onEnter()
 //
 ////////////////////////////////////////////////////////
 PerformBasicLayer::PerformBasicLayer(bool bControlMenuVisible, int nMaxCases, int nCurCase)
-: m_bControlMenuVisible(bControlMenuVisible)
-, m_nMaxCases(nMaxCases)
-, m_nCurCase(nCurCase)
+: _controlMenuVisible(bControlMenuVisible)
+, _maxCases(nMaxCases)
+, _curCase(nCurCase)
 {
 
 }
@@ -70,16 +70,16 @@ void PerformBasicLayer::onEnter()
 
     CCMenuItemFont::setFontName("Arial");
     CCMenuItemFont::setFontSize(24);
-    CCMenuItemFont* pMainItem = CCMenuItemFont::create("Back", std::bind( &PerformBasicLayer::toMainLayer, this, std::placeholders::_1));
+    CCMenuItemFont* pMainItem = CCMenuItemFont::create("Back", CC_CALLBACK_1(PerformBasicLayer::toMainLayer, this));
     pMainItem->setPosition(ccp(VisibleRect::rightBottom().x - 50, VisibleRect::rightBottom().y + 25));
     CCMenu* pMenu = CCMenu::create(pMainItem, NULL);
     pMenu->setPosition( CCPointZero );
 
-    if (m_bControlMenuVisible)
+    if (_controlMenuVisible)
     {
-        CCMenuItemImage *item1 = CCMenuItemImage::create(s_pPathB1, s_pPathB2, std::bind( &PerformBasicLayer::backCallback, this, std::placeholders::_1));
-        CCMenuItemImage *item2 = CCMenuItemImage::create(s_pPathR1, s_pPathR2, std::bind( &PerformBasicLayer::restartCallback, this, std::placeholders::_1));
-        CCMenuItemImage *item3 = CCMenuItemImage::create(s_pPathF1, s_pPathF2, std::bind( &PerformBasicLayer::nextCallback, this, std::placeholders::_1));
+        CCMenuItemImage *item1 = CCMenuItemImage::create(s_pPathB1, s_pPathB2, CC_CALLBACK_1(PerformBasicLayer::backCallback, this));
+        CCMenuItemImage *item2 = CCMenuItemImage::create(s_pPathR1, s_pPathR2, CC_CALLBACK_1(PerformBasicLayer::restartCallback, this));
+        CCMenuItemImage *item3 = CCMenuItemImage::create(s_pPathF1, s_pPathF2, CC_CALLBACK_1(PerformBasicLayer::nextCallback, this));
         item1->setPosition(ccp(VisibleRect::center().x - item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));
         item2->setPosition(ccp(VisibleRect::center().x, VisibleRect::bottom().y+item2->getContentSize().height/2));
         item3->setPosition(ccp(VisibleRect::center().x + item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));
@@ -106,17 +106,17 @@ void PerformBasicLayer::restartCallback(CCObject* pSender)
 
 void PerformBasicLayer::nextCallback(CCObject* pSender)
 {
-    m_nCurCase++;
-    m_nCurCase = m_nCurCase % m_nMaxCases;
+    _curCase++;
+    _curCase = _curCase % _maxCases;
 
     showCurrentTest();
 }
 
 void PerformBasicLayer::backCallback(CCObject* pSender)
 {
-    m_nCurCase--;
-    if( m_nCurCase < 0 )
-        m_nCurCase += m_nMaxCases;
+    _curCase--;
+    if( _curCase < 0 )
+        _curCase += _maxCases;
 
     showCurrentTest();
 }

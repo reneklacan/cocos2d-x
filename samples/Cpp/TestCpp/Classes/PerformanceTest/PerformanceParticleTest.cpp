@@ -37,7 +37,7 @@ void ParticleMenuLayer::showCurrentTest()
 
     ParticleMainScene* pNewScene = NULL;
 
-    switch (m_nCurCase)
+    switch (_curCase)
     {
     case 0:
         pNewScene = new ParticlePerformTest1;
@@ -53,7 +53,7 @@ void ParticleMenuLayer::showCurrentTest()
         break;
     }
 
-    s_nParCurIdx = m_nCurCase;
+    s_nParCurIdx = _curCase;
     if (pNewScene)
     {
         pNewScene->initWithSubTest(subTest, parNum);
@@ -125,7 +125,7 @@ void ParticleMainScene::initWithSubTest(int asubtest, int particles)
     {
         char str[10] = {0};
         sprintf(str, "%d ", i);
-        CCMenuItemFont* itemFont = CCMenuItemFont::create(str, std::bind( &ParticleMainScene::testNCallback, this, std::placeholders::_1));
+        CCMenuItemFont* itemFont = CCMenuItemFont::create(str, CC_CALLBACK_1(ParticleMainScene::testNCallback, this));
         itemFont->setTag(i);
         pSubMenu->addChild(itemFont, 10);
 

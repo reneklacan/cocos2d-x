@@ -407,15 +407,15 @@ void CCTMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
         if (pTMXMapInfo->getParentElement() == TMXPropertyLayer)
         {
             CCTMXLayerInfo* layer = (CCTMXLayerInfo*)pTMXMapInfo->getLayers()->lastObject();
-            CCSize layerSize = layer->m_tLayerSize;
+            CCSize layerSize = layer->_layerSize;
             unsigned int gid = (unsigned int)atoi(valueForKey("gid", attributeDict));
             int tilesAmount = layerSize.width*layerSize.height;
 
             for (int i = 0; i < tilesAmount; i++)
             {
-                if (((int *)layer->m_pTiles)[i] == -1)
+                if (((int *)layer->_tiles)[i] == -1)
                 {
-                    layer->m_pTiles[i] = gid;
+                    layer->_tiles[i] = gid;
                     break;
                 }
             }
@@ -424,7 +424,7 @@ void CCTMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
         {
             CCTMXTilesetInfo* info = (CCTMXTilesetInfo*)pTMXMapInfo->getTilesets()->lastObject();
             CCDictionary *dict = new CCDictionary();
-            pTMXMapInfo->setParentGID(info->m_uFirstGid + atoi(valueForKey("id", attributeDict)));
+            pTMXMapInfo->setParentGID(info->_firstGid + atoi(valueForKey("id", attributeDict)));
             pTMXMapInfo->getTileProperties()->setObject(dict, pTMXMapInfo->getParentGID());
             CC_SAFE_RELEASE(dict);
 
@@ -506,14 +506,14 @@ void CCTMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
         if (encoding == "")
         {
             CCTMXLayerInfo* layer = (CCTMXLayerInfo*)pTMXMapInfo->getLayers()->lastObject();
-            CCSize layerSize = layer->m_tLayerSize;
+            CCSize layerSize = layer->_layerSize;
             int tilesAmount = layerSize.width*layerSize.height;
 
             int *tiles = (int *) malloc(tilesAmount*sizeof(int));
             for (int i = 0; i < tilesAmount; i++)
                 tiles[i] = -1;
 
-            layer->m_pTiles = (unsigned int*) tiles;
+            layer->_tiles = (unsigned int*) tiles;
         }
         else if (encoding == "base64")
         {

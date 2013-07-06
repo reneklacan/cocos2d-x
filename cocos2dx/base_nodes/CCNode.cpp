@@ -593,7 +593,7 @@ Node* Node::getChildByTag(int aTag)
 void Node::addChild(Node *child, int zOrder, int tag)
 {    
     CCAssert( child != NULL, "Argument must be non-nil");
-    CCAssert( child->_parent == NULL, "child already added. It can't be added again");
+    //CCAssert( child->_parent == NULL, "child already added. It can't be added again");
 
     if( ! _children )
     {

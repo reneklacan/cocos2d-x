@@ -187,6 +187,11 @@ void Node::_setZOrder(int z)
 
 void Node::setZOrder(int z)
 {
+    if (_ZOrder == z)
+    {
+        return;
+    }
+
     _setZOrder(z);
     if (_parent)
     {

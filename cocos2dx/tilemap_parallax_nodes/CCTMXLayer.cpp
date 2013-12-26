@@ -154,6 +154,9 @@ void TMXLayer::releaseMap()
 // TMXLayer - setup Tiles
 void TMXLayer::setupTiles()
 {    
+    if (!_textureAtlas->getTexture())
+        return;
+
     // Optimization: quick hack that sets the image size on the tileset
     _tileSet->_imageSize = _textureAtlas->getTexture()->getContentSizeInPixels();
 

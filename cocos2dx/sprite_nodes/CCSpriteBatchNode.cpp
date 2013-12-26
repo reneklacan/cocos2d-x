@@ -665,7 +665,7 @@ void SpriteBatchNode::removeSpriteFromAtlas(Sprite *pobSprite)
 
 void SpriteBatchNode::updateBlendFunc(void)
 {
-    if (! _textureAtlas->getTexture()->hasPremultipliedAlpha())
+    if (!_textureAtlas->getTexture() || ! _textureAtlas->getTexture()->hasPremultipliedAlpha())
     {
         _blendFunc.src = GL_SRC_ALPHA;
         _blendFunc.dst = GL_ONE_MINUS_SRC_ALPHA;
